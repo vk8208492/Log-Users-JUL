@@ -1,19 +1,19 @@
 package app.controller;
 
-import app.service.UserServices;
-import app.utils.AppStarters;
-import app.utils.Constantss;
-import app.view.UserViews;
+import app.service.UserService;
+import app.utils.AppStarter;
+import app.utils.Constants;
+import app.view.UserView;
 
 import java.util.Map;
 
-public class UserControllers {
+public class UserController {
 
 
-    UserViews view;
-    UserServices service;
+    UserView view;
+    UserService service;
 
-    public UserControllers(UserServices service, UserViews view) {
+    public UserController(UserService service, UserView view) {
         this.service = service;
         this.view = view;
     }
@@ -27,7 +27,7 @@ public class UserControllers {
         // Якщо БД відсутня, виводимо повідомлення про це
         // і закриваємо програму.
         // Інакше виводимо результат та перезапускаємо програму.
-        if (res.equals(Constantss.DB_ABSENT_MSG)) {
+        if (res.equals(Constants.DB_ABSENT_MSG)) {
             // Виводимо результат
             view.getOutput(res);
             // Закриваємо програму
@@ -36,7 +36,7 @@ public class UserControllers {
             // Виводимо результат
             view.getOutput(res);
             // Перезапускаємо програму
-            AppStarters.startApp();
+            AppStarter.startApp();
         }
     }
 
@@ -47,7 +47,7 @@ public class UserControllers {
         // Якщо БД відсутня, виводимо повідомлення про це
         // і закриваємо програму.
         // Інакше виводимо результат та перезапускаємо програму.
-        if (res.equals(Constantss.DB_ABSENT_MSG)) {
+        if (res.equals(Constants.DB_ABSENT_MSG)) {
             // Виводимо результат
             view.getOutput(res);
             // Закриваємо програму
@@ -56,7 +56,7 @@ public class UserControllers {
             // Виводимо результат
             view.getOutput("\nCONTACTS:\n" + res);
             // Перезапускаємо програму
-            AppStarters.startApp();
+            AppStarter.startApp();
         }
     }
 
@@ -69,7 +69,7 @@ public class UserControllers {
         // Якщо БД відсутня, виводимо повідомлення про це
         // і закриваємо програму.
         // Інакше виводимо результат та перезапускаємо програму.
-        if (res.equals(Constantss.DB_ABSENT_MSG)) {
+        if (res.equals(Constants.DB_ABSENT_MSG)) {
             // Виводимо результат
             view.getOutput(res);
             // Закриваємо програму
@@ -78,7 +78,7 @@ public class UserControllers {
             // Виводимо результат
             view.getOutput("\nCONTACT BY ID:\n" + res);
             // Перезапускаємо програму
-            AppStarters.startApp();
+            AppStarter.startApp();
         }
     }
 
@@ -91,7 +91,7 @@ public class UserControllers {
         // Якщо БД відсутня, виводимо повідомлення про це
         // і закриваємо програму.
         // Інакше виводимо результат та перезапускаємо програму.
-        if (res.equals(Constantss.DB_ABSENT_MSG)) {
+        if (res.equals(Constants.DB_ABSENT_MSG)) {
             // Виводимо результат
             view.getOutput(res);
             // Закриваємо програму
@@ -100,7 +100,7 @@ public class UserControllers {
             // Виводимо результат
             view.getOutput(res);
             // Перезапускаємо програму
-            AppStarters.startApp();
+            AppStarter.startApp();
         }
     }
 
@@ -113,7 +113,7 @@ public class UserControllers {
         // Якщо БД відсутня, виводимо повідомлення про це
         // і закриваємо програму.
         // Інакше виводимо результат та перезапускаємо програму.
-        if (res.equals(Constantss.DB_ABSENT_MSG)) {
+        if (res.equals(Constants.DB_ABSENT_MSG)) {
             // Виводимо результат
             view.getOutput(res);
             // Закриваємо програму
@@ -122,7 +122,7 @@ public class UserControllers {
             // Виводимо результат
             view.getOutput(res);
             // Перезапускаємо програму
-            AppStarters.startApp();
+            AppStarter.startApp();
         }
     }
 

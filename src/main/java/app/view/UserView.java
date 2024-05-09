@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UserViews {
+public class UserView {
 
     Scanner scanner = new Scanner(System.in);
 

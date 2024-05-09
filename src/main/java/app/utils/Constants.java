@@ -1,10 +1,10 @@
 package app.utils;
 
-public class Constantss {
+public class Constants {
 
     public final static String DB_DRIVER = "jdbc:sqlite:";
     public final static String DB_BASE_URL = "src/main/resources/db/";
-    public final static String DB_NAME = "user_db.db";
+    public final static String DB_NAME = "users_db.db";
 
     public final static String WRONG_EMAIL_MSG = "Wrong email input.";
     public final static String WRONG_ID_MSG = "Wrong id input.";

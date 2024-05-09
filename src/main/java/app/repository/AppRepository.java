@@ -1,18 +1,16 @@
 package app.repository;
 
-import app.entity.Users;
-
 import java.util.List;
 import java.util.Optional;
 
-public interface AppRepositorys<User> {
-    String create(Users user);
+public interface AppRepository<User> {
+    String create(app.entity.User user);
 
-    Optional<List<Users>> read();
+    Optional<List<app.entity.User>> read();
 
-    Optional<Users> readById(Long id);
+    Optional<app.entity.User> readById(Long id);
 
-    String update(Users user);
+    String update(app.entity.User user);
 
     String delete(Long id);
 
