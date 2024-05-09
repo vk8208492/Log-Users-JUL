@@ -37,6 +37,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/info/SQL.sql" connection-id="316083ae-7821-4794-b554-764914178128" session-id="MAIN" current-schema="Users" />
     <mapping file-url="file://$PROJECT_DIR$" connection-id="virtual-sqlite-connection" session-id="MAIN" current-schema="" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
@@ -130,7 +131,7 @@
           <tcp-port-to value="4999" />
           <debugger-type value="ASK" />
         </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
+        <object-filters hide-empty-schemas="true" hide-pseudo-columns="false" hide-audit-columns="false">
           <object-filters />
           <object-type-filter use-master-settings="true">
             <object-type name="SCHEMA" enabled="true" />

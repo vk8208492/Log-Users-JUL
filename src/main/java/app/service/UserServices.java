@@ -1,12 +1,12 @@
 package app.service;
 
-import app.database.DBCheck;
-import app.entity.User;
-import app.entity.UserMapper;
-import app.exceptions.DBException;
-import app.exceptions.UserException;
-import app.repository.impl.UserRepository;
-import app.utils.Constants;
+import app.database.DBChecks;
+import app.entity.Users;
+import app.entity.UserMappers;
+import app.exceptions.DBExceptions;
+import app.exceptions.UserExceptions;
+import app.repository.impl.UserRepositorys;
+import app.utils.Constantss;
 import app.utils.UserValidator;
 
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.logging.Logger;
 
 
 
-public class UserService {
+public class UserServices {
 
-    UserRepository repository;
+    UserRepositorys repository;
     private static final Logger LOGGER =
-            Logger.getLogger(UserService.class.getName());
+            Logger.getLogger(UserServices.class.getName());
 
-    public UserService(UserRepository repository) {
+    public UserServices(UserRepositorys repository) {
         this.repository = repository;
     }
 
@@ -33,11 +33,11 @@ public class UserService {
         // Перевіряємо наявність файлу БД.
         // ТАК - працюємо з даними.
         // НІ - повідомлення про відсутність БД.
-        if ( DBCheck.isDBExists() ) {
+        if ( DBChecks.isDBExists() ) {
             try {
-                throw new DBException(Constants.DB_ABSENT_MSG);
-            } catch (DBException e) {
-                LOGGER.log(Level.SEVERE, Constants.LOG_DB_ABSENT_MSG);
+                throw new DBExceptions(Constantss.DB_ABSENT_MSG);
+            } catch (DBExceptions e) {
+                LOGGER.log(Level.SEVERE, Constantss.LOG_DB_ABSENT_MSG);
                 return e.getMessage();
             }
         }
@@ -45,34 +45,34 @@ public class UserService {
                 new UserValidator().validateUserData(data);
         if ( !errors.isEmpty() ) {
             try {
-                throw new UserException("Check inputs", errors);
-            } catch (UserException e) {
-                LOGGER.log(Level.WARNING, Constants.LOG_DATA_INPTS_WRONG_MSG);
+                throw new UserExceptions("Check inputs", errors);
+            } catch (UserExceptions e) {
+                LOGGER.log(Level.WARNING, Constantss.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
-        return repository.create(new UserMapper().mapUserData(data));
+        return repository.create(new UserMappers().mapUserData(data));
     }
 
     public String read() {
         // Перевіряємо наявність файлу БД.
         // ТАК - працюємо з даними.
         // НІ - повідомлення про відсутність БД.
-        if ( DBCheck.isDBExists() ) {
+        if ( DBChecks.isDBExists() ) {
             try {
-                throw new DBException(Constants.DB_ABSENT_MSG);
-            } catch (DBException e) {
-                LOGGER.log(Level.SEVERE, Constants.LOG_DB_ABSENT_MSG);
+                throw new DBExceptions(Constantss.DB_ABSENT_MSG);
+            } catch (DBExceptions e) {
+                LOGGER.log(Level.SEVERE, Constantss.LOG_DB_ABSENT_MSG);
                 return e.getMessage();
             }
         }
         // Отримуємо дані
-        Optional<List<User>> optional = repository.read();
+        Optional<List<Users>> optional = repository.read();
         // Якщо Optional не містить null, формуємо виведення.
         // Інакше повідомлення про відсутність даних.
         if ( optional.isPresent() ) {
             // Отримуємо колекцію з Optional
-            List<User> list = optional.get();
+            List<Users> list = optional.get();
             // Якщо колекція не порожня, формуємо виведення.
             // Інакше повідомлення про відсутність даних.
             if ( !list.isEmpty() ) {
@@ -86,12 +86,12 @@ public class UserService {
                 );
                 return sb.toString();
             } else {
-                LOGGER.log(Level.WARNING, Constants.LOG_DATA_ABSENT_MSG);
-                return Constants.DATA_ABSENT_MSG;
+                LOGGER.log(Level.WARNING, Constantss.LOG_DATA_ABSENT_MSG);
+                return Constantss.DATA_ABSENT_MSG;
             }
         } else {
-            LOGGER.log(Level.WARNING, Constants.LOG_DATA_ABSENT_MSG);
-            return Constants.DATA_ABSENT_MSG;
+            LOGGER.log(Level.WARNING, Constantss.LOG_DATA_ABSENT_MSG);
+            return Constantss.DATA_ABSENT_MSG;
         }
     }
 
@@ -99,11 +99,11 @@ public class UserService {
         // Перевіряємо наявність файлу БД.
         // ТАК - працюємо з даними.
         // НІ - повідомлення про відсутність БД.
-        if ( DBCheck.isDBExists() ) {
+        if ( DBChecks.isDBExists() ) {
             try {
-                throw new DBException(Constants.DB_ABSENT_MSG);
-            } catch (DBException e) {
-                LOGGER.log(Level.SEVERE, Constants.LOG_DB_ABSENT_MSG);
+                throw new DBExceptions(Constantss.DB_ABSENT_MSG);
+            } catch (DBExceptions e) {
+                LOGGER.log(Level.SEVERE, Constantss.LOG_DB_ABSENT_MSG);
                 return e.getMessage();
             }
         }
@@ -111,24 +111,24 @@ public class UserService {
                 new UserValidator().validateUserData(data);
         if ( !errors.isEmpty() ) {
             try {
-                throw new UserException("Check inputs", errors);
-            } catch (UserException e) {
-                LOGGER.log(Level.WARNING, Constants.LOG_DATA_INPTS_WRONG_MSG);
+                throw new UserExceptions("Check inputs", errors);
+            } catch (UserExceptions e) {
+                LOGGER.log(Level.WARNING, Constantss.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
         // Отримуємо дані
-        Optional<User> optional =
+        Optional<Users> optional =
                 repository.readById(Long.parseLong(data.get("id")));
         // Якщо Optional не містить null, формуємо виведення.
         // Інакше повідомлення про відсутність даних.
         if ( optional.isPresent() ) {
             // Отримуємо об'єкт з Optional
-            User user = optional.get();
+            Users user = optional.get();
             return user.toString();
         } else {
-            LOGGER.log(Level.WARNING, Constants.LOG_DATA_ABSENT_MSG);
-            return Constants.DATA_ABSENT_MSG;
+            LOGGER.log(Level.WARNING, Constantss.LOG_DATA_ABSENT_MSG);
+            return Constantss.DATA_ABSENT_MSG;
         }
     }
 
@@ -136,11 +136,11 @@ public class UserService {
         // Перевіряємо наявність файлу БД.
         // ТАК - працюємо з даними.
         // НІ - повідомлення про відсутність БД.
-        if ( DBCheck.isDBExists() ) {
+        if ( DBChecks.isDBExists() ) {
             try {
-                throw new DBException(Constants.DB_ABSENT_MSG);
-            } catch (DBException e) {
-                LOGGER.log(Level.SEVERE, Constants.LOG_DB_ABSENT_MSG);
+                throw new DBExceptions(Constantss.DB_ABSENT_MSG);
+            } catch (DBExceptions e) {
+                LOGGER.log(Level.SEVERE, Constantss.LOG_DB_ABSENT_MSG);
                 return e.getMessage();
             }
         }
@@ -148,29 +148,29 @@ public class UserService {
                 new UserValidator().validateUserData(data);
         if ( !errors.isEmpty() ) {
             try {
-                throw new UserException("Check inputs", errors);
-            } catch (UserException e) {
-                LOGGER.log(Level.WARNING, Constants.LOG_DATA_INPTS_WRONG_MSG);
+                throw new UserExceptions("Check inputs", errors);
+            } catch (UserExceptions e) {
+                LOGGER.log(Level.WARNING, Constantss.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
         // Спершу перевіряємо наявність об'єкта в БД за таким id.
         // Якщо ні, повертаємо повідомлення про відсутність таких даних,
         // інакше оновлюємо відповідний об'єкт в БД
-        User user = new UserMapper().mapUserData(data);
+        Users user = new UserMappers().mapUserData(data);
         if ( repository.readById(user.getId()).isEmpty() ) {
-            return Constants.DATA_ABSENT_MSG;
+            return Constantss.DATA_ABSENT_MSG;
         } else {
             return repository.update(user);
         }
     }
     public String delete(Map<String, String> data) {
 
-        if (DBCheck.isDBExists()) {
+        if ( DBChecks.isDBExists()) {
             try {
-                throw new DBException(Constants.DB_ABSENT_MSG);
-            } catch (DBException e) {
-                LOGGER.log(Level.SEVERE, Constants.LOG_DB_ABSENT_MSG);
+                throw new DBExceptions(Constantss.DB_ABSENT_MSG);
+            } catch (DBExceptions e) {
+                LOGGER.log(Level.SEVERE, Constantss.LOG_DB_ABSENT_MSG);
                 return e.getMessage();
             }
         }
@@ -178,9 +178,9 @@ public class UserService {
                 new UserValidator().validateUserData(data);
         if (!errors.isEmpty()) {
             try {
-                throw new UserException("Check inputs", errors);
-            } catch (UserException e) {
-                LOGGER.log(Level.WARNING, Constants.LOG_DATA_INPTS_WRONG_MSG);
+                throw new UserExceptions("Check inputs", errors);
+            } catch (UserExceptions e) {
+                LOGGER.log(Level.WARNING, Constantss.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
@@ -188,9 +188,9 @@ public class UserService {
         // Якщо ні, повертаємо повідомлення про відсутність
         // таких даних в БД, інакше видаляємо відповідний об'єкт
         // із БД.
-        Long id = new UserMapper().mapUserData(data).getId();
+        Long id = new UserMappers().mapUserData(data).getId();
         if (!repository.isIdExists(id)) {
-            return Constants.DATA_ABSENT_MSG;
+            return Constantss.DATA_ABSENT_MSG;
         } else {
             return repository.delete(id);
         }

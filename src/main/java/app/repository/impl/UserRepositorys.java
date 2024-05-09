@@ -1,9 +1,9 @@
 package app.repository.impl;
 
-import app.database.DBConn;
-import app.entity.User;
-import app.repository.AppRepository;
-import app.utils.Constants;
+import app.database.DBConns;
+import app.entity.Users;
+import app.repository.AppRepositorys;
+import app.utils.Constantss;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,44 +15,44 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserRepository implements AppRepository<User> {
+public class UserRepositorys implements AppRepositorys<Users> {
 
     private final static String TABLE_USERS = "users";
     private static final Logger LOGGER =
-            Logger.getLogger(UserRepository.class.getName());
+            Logger.getLogger(UserRepositorys.class.getName());
 
     @Override
-    public String create(User user) {
+    public String create(Users user) {
 
         String sql = "INSERT INTO " + TABLE_USERS + " (name, email) VALUES(?, ?)";
 
-        try (PreparedStatement pstmt = DBConn.connect().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = DBConns.connect().prepareStatement(sql)) {
 
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
 
             pstmt.executeUpdate();
 
-            return Constants.DATA_INSERT_MSG;
+            return Constantss.DATA_INSERT_MSG;
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
 
             return e.getMessage();
         }
     }
 
     @Override
-    public Optional<List<User>> read() {
-        try (Statement stmt = DBConn.connect().createStatement()) {
+    public Optional<List<Users>> read() {
+        try (Statement stmt = DBConns.connect().createStatement()) {
 
-            List<User> list = new ArrayList<>();
+            List<Users> list = new ArrayList<>();
 
             String sql = "SELECT id, name, email FROM " + TABLE_USERS;
 
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                list.add(new User(
+                list.add(new Users(
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("email"))
@@ -61,22 +61,22 @@ public class UserRepository implements AppRepository<User> {
 
             return Optional.of(list);
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
 
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<User> readById(Long id) {
+    public Optional<Users> readById(Long id) {
 
         String sql = "SELECT id, name, email FROM " + TABLE_USERS +
                 " WHERE id = ?";
-        try (PreparedStatement pst = DBConn.connect().prepareStatement(sql)) {
+        try (PreparedStatement pst = DBConns.connect().prepareStatement(sql)) {
             pst.setLong(1, id);
             ResultSet rs = pst.executeQuery();
             rs.next();
-            User user = new User();
+            Users user = new Users();
             long entityId = rs.getLong("id");
             String name = rs.getString("name");
             String email = rs.getString("email");
@@ -90,18 +90,18 @@ public class UserRepository implements AppRepository<User> {
 
             return Optional.ofNullable(user);
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
 
             return Optional.empty();
         }
     }
 
     @Override
-    public String update(User user) {
+    public String update(Users user) {
 
         String sql = "UPDATE " + TABLE_USERS + " SET name = ?, email = ? WHERE id = ?";
 
-        try (PreparedStatement pstmt = DBConn.connect().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = DBConns.connect().prepareStatement(sql)) {
 
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
@@ -109,9 +109,9 @@ public class UserRepository implements AppRepository<User> {
 
             pstmt.executeUpdate();
 
-            return Constants.DATA_UPDATE_MSG;
+            return Constantss.DATA_UPDATE_MSG;
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
 
             return e.getMessage();
         }
@@ -122,15 +122,15 @@ public class UserRepository implements AppRepository<User> {
 
         String sql = "DELETE FROM " + TABLE_USERS + " WHERE id = ?";
 
-        try (PreparedStatement stmt = DBConn.connect().prepareStatement(sql)) {
+        try (PreparedStatement stmt = DBConns.connect().prepareStatement(sql)) {
 
             stmt.setLong(1, id);
 
             stmt.executeUpdate();
 
-            return Constants.DATA_DELETE_MSG;
+            return Constantss.DATA_DELETE_MSG;
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
 
             return e.getMessage();
         }
@@ -142,7 +142,7 @@ public class UserRepository implements AppRepository<User> {
         String sql = "SELECT COUNT(id) FROM " + TABLE_USERS +
                 " WHERE id = ?";
         try {
-            PreparedStatement pst = DBConn.connect().prepareStatement(sql);
+            PreparedStatement pst = DBConns.connect().prepareStatement(sql);
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {
 
@@ -151,7 +151,7 @@ public class UserRepository implements AppRepository<User> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, Constants.LOG_DB_ERROR_MSG);
+            LOGGER.log(Level.WARNING, Constantss.LOG_DB_ERROR_MSG);
             return false;
         }
         return false;

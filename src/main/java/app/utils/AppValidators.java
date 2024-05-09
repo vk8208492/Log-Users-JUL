@@ -1,6 +1,6 @@
 package app.utils;
 
-public class AppValidator {
+public class AppValidators {
 
     public final static String ID_RGX = "^[1-9]$";
 
