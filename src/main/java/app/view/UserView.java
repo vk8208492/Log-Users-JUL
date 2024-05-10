@@ -37,7 +37,7 @@ public class UserView {
         System.out.print("Input name: ");
         data.put("name", scanner.nextLine().trim());
         System.out.print("Input email in format example@mail.com: ");
-        data.put("phone", scanner.nextLine().trim());
+        data.put("email", scanner.nextLine().trim());
         return data;
     }
 
