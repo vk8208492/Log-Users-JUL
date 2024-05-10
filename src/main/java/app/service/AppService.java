@@ -6,13 +6,13 @@ import app.repository.impl.UserRepository;
 import app.utils.AppStarter;
 import app.utils.Constants;
 import app.view.AppView;
-import app.view.UserView;
+import app.view.UserViews;
 
 public class AppService {
 
     UserRepository repository = new UserRepository();
     UserService service = new UserService(repository);
-    UserView view = new UserView();
+    UserViews view = new UserViews();
     UserController controller = new UserController(service, view);
 
     public void handleOption(int option) {

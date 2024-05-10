@@ -3,17 +3,17 @@ package app.controller;
 import app.service.UserService;
 import app.utils.AppStarter;
 import app.utils.Constants;
-import app.view.UserView;
+import app.view.UserViews;
 
 import java.util.Map;
 
 public class UserController {
 
 
-    UserView view;
+    UserViews view;
     UserService service;
 
-    public UserController(UserService service, UserView view) {
+    public UserController(UserService service, UserViews view) {
         this.service = service;
         this.view = view;
     }
